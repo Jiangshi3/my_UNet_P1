@@ -1,0 +1,2 @@
+也可以借鉴FUnIE-GAN中的 funiegan.py中的生成器中编码器-解码器和鉴别器结构；
+此时的model的输出和论文Unet中的一模一样；
