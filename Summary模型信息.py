@@ -1,6 +1,7 @@
 import torch
 
-from unet_model import *
+# from unet_model import *
+from unet_cbam_densenet_2 import *
 from torchsummary import summary
 
 
