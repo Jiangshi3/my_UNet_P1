@@ -2,16 +2,15 @@
 11月23号：(把CBAM放在解码器的后面)
     此Unet+CBAM结构：
     input：3×256×256  -(DoubleConv)> 16×256×256  ＋          -(Up5+cat+conv)-> 16×256×256  -(OutConv)->3×256×256
-    (这里如果要观察DenseNet，要先下采样后，再接)
-        -(Down1) ->32×128×128                  ＋          -(Up4+cat+conv)-> 32×128×128 ↑  +CBAM
-         -(Down2) ->64×64×64                  ＋          -(Up3+cat+conv)-> 64×64×64 ↑   +CBAM
-          -(Down3) ->128×32×32               ＋          -(Up2+cat+conv)-> 128×32×32 ↑  +CBAM
-           -(Down4) ->256×16×16            ＋          -(Up1+cat+conv)-> 256×16×16 ↑  +CBAM
-            -(Down5) ->512×8×8             -----------→↑
+        -(DenseNet1) ->32×128×128                  ＋          -(Up4+cat+conv)-> 32×128×128 ↑  +CBAM
+         -(DN2) ->64×64×64                  ＋          -(Up3+cat+conv)-> 64×64×64 ↑   +CBAM
+          -(DN3) ->128×32×32               ＋          -(Up2+cat+conv)-> 128×32×32 ↑  +CBAM
+           -(DN4) ->256×16×16            ＋          -(Up1+cat+conv)-> 256×16×16 ↑  +CBAM
+            -(DN5) ->512×8×8             -----------→↑
 '''
-
 from unet_parts import *
 from densenet_2 import *
+
 
 class ChannelAttention(nn.Module):
     def __init__(self, in_planes, ratio=32):  # ratio 原始为16

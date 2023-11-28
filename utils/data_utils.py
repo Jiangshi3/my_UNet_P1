@@ -28,8 +28,8 @@ class PairedImageDataset(torch.utils.data.Dataset):
 
 class PairedImageDataset_2(torch.utils.data.Dataset):
     def __init__(self, root_dir, transform=None):
-        self.raw_folder = os.path.join(root_dir, "raw-890")
-        self.reference_folder = os.path.join(root_dir, "reference-890")
+        self.raw_folder = os.path.join(root_dir, "raw-90")
+        self.reference_folder = os.path.join(root_dir, "reference-90")
         self.raw_images = os.listdir(self.raw_folder)
         self.reference_images = os.listdir(self.reference_folder)
         self.root_dir = root_dir
