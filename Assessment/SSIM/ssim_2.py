@@ -1,43 +1,10 @@
-# Copyright 2020 by Gongfan Fang, Zhejiang University.
-# All rights reserved.
+# 导入上上级的目录失败，so直接拷贝过来整个文件到当前目录
 import warnings
 from typing import List, Optional, Tuple, Union
 
 import torch
 import torch.nn.functional as F
 from torch import Tensor
-
-'''
-https://github.com/VainF/pytorch-msssim/blob/master/README.md
-SSIM（结构相似性指数）和 MS-SSIM（多尺度结构相似性指数）
-SSIM 是一种广泛用于图像质量评估的指标，它主要关注三个方面的图像信息：
-亮度信息（Luminance）： 衡量图像的整体亮度。
-对比度信息（Contrast）： 衡量图像中像素亮度的差异。
-结构信息（Structure）： 衡量图像结构的相似性。
-
-MS-SSIM 是在 SSIM 的基础上引入多尺度分析的改进版本。它考虑了不同尺度上的图像结构信息，以更全面地评估图像相似性。
-具体而言，MS-SSIM 将图像分为多个子区域，并对每个子区域分别计算 SSIM，然后对这些 SSIM 值进行加权平均。
-MS-SSIM 考虑了图像在不同尺度上的结构信息，因此可以更好地捕捉图像的局部和全局特征。与 SSIM 相比，MS-SSIM 更适用于复杂场景下的图像相似性评估
-
-使用方法：
-    使用函数形式：
-    # 计算每张图片的 SSIM
-    ssim_val = ssim(X, Y, data_range=255, size_average=False)  # 返回 (N,)
-    # 计算平均 SSIM
-    ssim_loss = 1 - ssim(X, Y, data_range=255, size_average=True)  # 返回一个标量
-    
-    使用模块形式：
-    # 初始化 SSIM 模块
-    ssim_module = SSIM(data_range=255, size_average=True, channel=3)  # channel=1 for灰度图像
-    # 计算 SSIM 损失
-    ssim_loss = 1 - ssim_module(X, Y)  # 返回一个标量
-    
-    两种方式都可以用作损失函数。如果你希望得到每张图片的 SSIM 值，你可以使用函数形式。
-    如果你只关心平均 SSIM 损失作为整体损失，你可以使用模块形式。
-    选择哪一种方式取决于你的实际需求。如果你希望在每个批次中得到每张图片的 SSIM 值，使用函数形式；
-    如果你只对整体的平均 SSIM 损失感兴趣，可以使用模块形式。
-'''
-
 
 def _fspecial_gauss_1d(size: int, sigma: float) -> Tensor:
     r"""Create 1-D gauss kernel
@@ -86,12 +53,12 @@ def gaussian_filter(input: Tensor, win: Tensor) -> Tensor:
 
 
 def _ssim(
-    X: Tensor,
-    Y: Tensor,
-    data_range: float,
-    win: Tensor,
-    size_average: bool = True,
-    K: Union[Tuple[float, float], List[float]] = (0.01, 0.03)
+        X: Tensor,
+        Y: Tensor,
+        data_range: float,
+        win: Tensor,
+        size_average: bool = True,
+        K: Union[Tuple[float, float], List[float]] = (0.01, 0.03)
 ) -> Tuple[Tensor, Tensor]:
     r""" Calculate ssim index for X and Y
 
@@ -134,15 +101,15 @@ def _ssim(
 
 
 def ssim(
-    X: Tensor,
-    Y: Tensor,
-    data_range: float = 255,
-    size_average: bool = True,
-    win_size: int = 11,
-    win_sigma: float = 1.5,
-    win: Optional[Tensor] = None,
-    K: Union[Tuple[float, float], List[float]] = (0.01, 0.03),
-    nonnegative_ssim: bool = False,
+        X: Tensor,
+        Y: Tensor,
+        data_range: float = 255,
+        size_average: bool = True,
+        win_size: int = 11,
+        win_sigma: float = 1.5,
+        win: Optional[Tensor] = None,
+        K: Union[Tuple[float, float], List[float]] = (0.01, 0.03),
+        nonnegative_ssim: bool = False,
 ) -> Tensor:
     r""" interface of ssim
     Args:
@@ -169,7 +136,7 @@ def ssim(
     if len(X.shape) not in (4, 5):
         raise ValueError(f"Input images should be 4-d or 5-d tensors, but got {X.shape}")
 
-    #if not X.type() == Y.type():
+    # if not X.type() == Y.type():
     #    raise ValueError(f"Input images should have the same dtype, but got {X.type()} and {Y.type()}.")
 
     if win is not None:  # set win_size
@@ -193,15 +160,15 @@ def ssim(
 
 
 def ms_ssim(
-    X: Tensor,
-    Y: Tensor,
-    data_range: float = 255,
-    size_average: bool = True,
-    win_size: int = 11,
-    win_sigma: float = 1.5,
-    win: Optional[Tensor] = None,
-    weights: Optional[List[float]] = None,
-    K: Union[Tuple[float, float], List[float]] = (0.01, 0.03)
+        X: Tensor,
+        Y: Tensor,
+        data_range: float = 255,
+        size_average: bool = True,
+        win_size: int = 11,
+        win_sigma: float = 1.5,
+        win: Optional[Tensor] = None,
+        weights: Optional[List[float]] = None,
+        K: Union[Tuple[float, float], List[float]] = (0.01, 0.03)
 ) -> Tensor:
     r""" interface of ms-ssim
     Args:
@@ -224,7 +191,7 @@ def ms_ssim(
         X = X.squeeze(dim=d)
         Y = Y.squeeze(dim=d)
 
-    #if not X.type() == Y.type():
+    # if not X.type() == Y.type():
     #    raise ValueError(f"Input images should have the same dtype, but got {X.type()} and {Y.type()}.")
 
     if len(X.shape) == 4:
@@ -242,7 +209,7 @@ def ms_ssim(
 
     smaller_side = min(X.shape[-2:])
     assert smaller_side > (win_size - 1) * (
-        2 ** 4
+            2 ** 4
     ), "Image size should be larger than %d due to the 4 downsamplings in ms-ssim" % ((win_size - 1) * (2 ** 4))
 
     if weights is None:
@@ -276,15 +243,15 @@ def ms_ssim(
 
 class SSIM(torch.nn.Module):
     def __init__(
-        self,
-        data_range: float = 255,
-        size_average: bool = True,
-        win_size: int = 11,
-        win_sigma: float = 1.5,
-        channel: int = 3,
-        spatial_dims: int = 2,
-        K: Union[Tuple[float, float], List[float]] = (0.01, 0.03),
-        nonnegative_ssim: bool = False,
+            self,
+            data_range: float = 255,
+            size_average: bool = True,
+            win_size: int = 11,
+            win_sigma: float = 1.5,
+            channel: int = 3,
+            spatial_dims: int = 2,
+            K: Union[Tuple[float, float], List[float]] = (0.01, 0.03),
+            nonnegative_ssim: bool = False,
     ) -> None:
         r""" class for ssim
         Args:
@@ -319,15 +286,15 @@ class SSIM(torch.nn.Module):
 
 class MS_SSIM(torch.nn.Module):
     def __init__(
-        self,
-        data_range: float = 255,
-        size_average: bool = True,
-        win_size: int = 11,
-        win_sigma: float = 1.5,
-        channel: int = 3,
-        spatial_dims: int = 2,
-        weights: Optional[List[float]] = None,
-        K: Union[Tuple[float, float], List[float]] = (0.01, 0.03),
+            self,
+            data_range: float = 255,
+            size_average: bool = True,
+            win_size: int = 11,
+            win_sigma: float = 1.5,
+            channel: int = 3,
+            spatial_dims: int = 2,
+            weights: Optional[List[float]] = None,
+            K: Union[Tuple[float, float], List[float]] = (0.01, 0.03),
     ) -> None:
         r""" class for ms-ssim
         Args:

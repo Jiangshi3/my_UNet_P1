@@ -5,11 +5,17 @@ import numpy as np
 # original_path = 'D:\\dataset\\UIEB_Dataset\\raw-10\\5554.png'  # 21.368982004963343
 # original_path = 'D:\\dataset\\UIEB_Dataset\\raw-10-out-P5-Resize512\\result_5554.png'  # 19.01174241515821
 # original_path = 'D:\\dataset\\UIEB_Dataset\\raw-10-out-P4-Resize256\\result_5554.png'  # 23.479541106586318
+# original_path = 'D:\\dataset\\UIEB_Dataset\\raw-10-out-12-23\\result_5554.png'         # 22.108674038096687
+# original_path = 'D:\\dataset\\UIEB_Dataset\\raw-10-out-12-23-1-resume\\result_5554.png'  # 23.34808018423861
+# original_path = 'D:\\dataset\\UIEB_Dataset\\raw-10-out-12-23-resume-1-2\\result_5554.png'  # 20.93702866975812
 # compress_path = 'D:\\dataset\\UIEB_Dataset\\reference-10\\5554.png'
 
 # original_path = 'D:\\dataset\\UIEB_Dataset\\raw-10\\15045.png'  # 17.446286692117226
 # original_path = 'D:\\dataset\\UIEB_Dataset\\raw-10-out-P4-Resize256\\result_15045.png'  # 23.51785063435742
-original_path = 'D:\\dataset\\UIEB_Dataset\\raw-10-out-P5-Resize512\\result_15045.png'  # 25.915912462419804
+# original_path = 'D:\\dataset\\UIEB_Dataset\\raw-10-out-P5-Resize512\\result_15045.png'  # 25.915912462419804
+# original_path = 'D:\\dataset\\UIEB_Dataset\\raw-10-out-12-18-2\\result_15045.png'       # 23.04321847245103
+# original_path = 'D:\\dataset\\UIEB_Dataset\\raw-10-out-12-23-1-resume\\result_15045.png'  # 25.86528908886571
+original_path = 'D:\\dataset\\UIEB_Dataset\\raw-10-out-12-23-resume-1-2\\result_15045.png'  # 26.95464693206791
 compress_path = 'D:\\dataset\\UIEB_Dataset\\reference-10\\15045.png'
 
 img1 = np.array(Image.open(original_path)).astype(np.float64)

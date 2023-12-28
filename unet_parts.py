@@ -57,12 +57,14 @@ class Up(nn.Module):
             self.conv = DoubleConv(in_channels, out_channels)
 
     def forward(self, x1, x2):
+        # print(f"x1.size:{x1.size()}, x2.size:{x2.size()}")
         x1 = self.up(x1)  # 这里的尺寸应该是[batch, channel, height, weight]
         # x1的size比x2的小
         # 填充x1
-        # diffY = x2.size()[2] - x1.size()[2]  # 在height上的差距
-        # diffX = x2.size()[3] - x1.size()[3]  # 在weight上的差距
-        # x1 = F.pad(x1, [diffX//2, diffX - diffX//2, diffY//2, diffY - diffY//2])   # 填充操作是对x1的四个边（左、右、上、下）进行的
+        if x1.size() != x2.size():
+            diffY = x2.size()[2] - x1.size()[2]  # 在height上的差距
+            diffX = x2.size()[3] - x1.size()[3]  # 在weight上的差距
+            x1 = F.pad(x1, [diffX//2, diffX - diffX//2, diffY//2, diffY - diffY//2])   # 填充操作是对x1的四个边（左、右、上、下）进行的
 
         # 裁剪 X2， X2的size比X1的大；
         # x2 = x2[:, :, :x1.shape[2], :x1.shape[3]]

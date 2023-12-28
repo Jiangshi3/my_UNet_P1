@@ -7,22 +7,28 @@ from PIL import Image
 from unet_cbam_densenet_2 import UNet
 
 model = UNet(3, 3)
-model.load_state_dict(torch.load('../pth/trained_model_11-29.pth'))
+# model.load_state_dict(torch.load('../pth/trained_model_12-04.pth'))  # resize(256,256)
+# model.load_state_dict(torch.load('../pth/trained_model_12-05.pth'))  # resize(512,512); batchsize=2; epoch=20;
+# model.load_state_dict(torch.load('../pth/trained_model_12-14.pth'))  # resize(512,512); batchsize=2; epoch=40; lr=0.00001;修改了loss
+model.load_state_dict(torch.load('../pth/trained_model_12-23-resume-1.pth'))  # resize(512,512); batchsize=2; epoch=40; lr=0.00001;修改了loss
 model.eval()
 
 # 设置测试数据集文件夹路径
-test_data_folder = 'D:\\dataset\\UIEB_Dataset\\raw-10-test'
-# test_data_folder = 'D:\\dataset\\UIEB_Dataset\\challenging-10'
+# test_data_folder = 'D:\\dataset\\UIEB_Dataset\\raw-10'
+test_data_folder = 'D:\\dataset\\UIEB_Dataset\\challenging-10'
 
 # 2. 预处理测试数据
 transform = transforms.Compose([
-    transforms.Resize((256, 256)),
+    # transforms.Resize((256, 256)),
     transforms.ToTensor(),
 ])
 
 # 3. 进行推断和保存结果
-output_folder = 'D:\\dataset\\UIEB_Dataset\\raw-10-out-P2'
-# output_folder = 'D:\\dataset\\UIEB_Dataset\\challenging-10-out-P2'
+# output_folder = 'D:\\dataset\\UIEB_Dataset\\raw-10-out-12-24-1'
+# output_folder = 'D:\\dataset\\UIEB_Dataset\\raw-10-out-12-23-resume-1-2'
+# output_folder = 'D:\\dataset\\UIEB_Dataset\\raw-10-out-P4-Resize256-1'
+# output_folder = 'D:\\dataset\\UIEB_Dataset\\challenging-10-out-P5-Resize512'
+output_folder = 'D:\\dataset\\UIEB_Dataset\\challenging-10-out-12-23-resume-1-2'
 
 # 确保输出文件夹存在
 os.makedirs(output_folder, exist_ok=True)

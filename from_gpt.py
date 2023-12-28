@@ -92,7 +92,7 @@ for epoch in range(num_epochs):
         print(f"Epoch [{epoch+1}/{num_epochs}], Loss: {avg_val_loss.item()}")
 
 # Save the trained model if needed
-torch.save(model.state_dict(), "trained_model.pth")
+torch.save(model.state_dict(), "pth/trained_model_11-29.pth")
 
 
 '''
